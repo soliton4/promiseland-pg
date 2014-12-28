@@ -1,0 +1,33 @@
+{
+  "name": "promiseland-pg",
+  "version": "0.0.1",
+  "description": "a promising connection object and a storage module",
+  "main": "./Connection.js",
+  "dependencies": {
+    "pg": "4.1.x",
+    "sliced": "0.0.x",
+    "lodash": "1.3.x"
+  },
+  "peerDependencies": {
+    "promiseland" :  "0.0.14"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soliton4/promiseland-pg.git"
+  },
+  "keywords": [
+    "promiseland", "pg", "postgres", "postgresql", "storage", "savable"
+  ],
+  "author": {
+    "name": "Matthias Behrens",
+    "email": "matthias.behrens@gmail.com"
+  },
+  "license": "LGPLv3",
+  "engine": {
+    "node": ">=0.10"
+  },
+  "bugs": {
+    "url": "http://github.com/soliton4/promiseland-pg/issues"
+  },
+  "homepage": "http://promiseland.technology"
+}

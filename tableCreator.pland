@@ -1,0 +1,283 @@
+var sql = require "./sql";
+
+var parser = require "./typeParser";
+
+// creates a table including indexes
+// if the table exists it will eather do nothing or try to preserve as much data as possible if the definition changed
+// the result will be a table fitting your definition
+
+
+/*
+
+parameter:
+
+{
+  connection,       // a promising pg connection object
+  table,            // a node-sql object describing a table -> https://github.com/brianc/node-sql
+  indexes,          // all indexes to be created - for pk use the primaryKey property of a column
+}
+
+returns:
+  promising
+
+*/
+
+
+var tableCreator = (par){
+  
+  var con = par.connection;
+  var table = par.table;
+  var indexes = par.indexes || [];
+  
+  var existing = *con.tableDescription({
+    name: table.getName(),
+    schema: table.getSchema()
+  });
+  
+  var createTable = true;
+  var dif = false;
+  var droptemp = false;
+  var renameName;
+  
+  if (existing){
+    console.log("existing");
+    var excols = existing.table.columns;
+    var cols = table.columns;
+    var i = 0;
+    if (cols.length == excols.length){
+      
+      for (i = 0; i < cols.length; ++i){
+        if (cols[i].name != excols[i].name){
+          console.log("dif name");
+          dif = true;
+          break;
+        };
+        if (!sameType(cols[i].dataType, excols[i].dataType)){
+          console.log("dif type");
+          console.log(cols[i].dataType + " - " + excols[i].dataType);
+          dif = true;
+          break;
+        };
+        if (cols[i].primaryKey != excols[i].primaryKey){
+          console.log("dif pk");
+          dif = true;
+          break;
+        };
+      };
+    }else{
+      console.log("dif length");
+      dif = true;
+    };
+    if (dif){
+      console.log("some dif")
+      renameName = table.getName() + '_temp_rename';
+      *con.query(existing.table.alter().rename(renameName));
+      droptemp = true;
+    }else{
+      createTable = false;
+    };
+  };
+  
+  
+  
+  if (createTable){
+    console.log("creating table");
+    var create = table.create();
+    *con.query(create);
+  };
+  
+  if (existing && dif){
+    var i;
+    var tempCols = [];
+    for (i = 0; i < excols.length; ++i){
+      tempCols.push(excols[i].name);
+    };
+    sql.setDialect("postgres");
+    var tempTable = sql.define({
+      name: renameName,
+      schema: table.getSchema(),
+      columns: tempCols
+    });
+    
+    var usedCols = [];
+    for (i = 0; i < excols.length; ++i){
+      var j = 0;
+      for (j = 0; j < cols.length; ++j){
+        if (cols[j].name == excols[i].name){
+          usedCols.push(cols[j].name);
+          break;
+        };
+      };
+    };
+    
+    if (usedCols.length){
+      console.log(usedCols);
+      var tempCols1 = [];
+      for (i = 0; i < usedCols.length; ++i){
+        tempCols1.push(table[usedCols[i]]);
+      };
+      var ins = table.insert.apply(table, tempCols1);
+      console.log("1");
+      var tempCols2 = [];
+      for (i = 0; i < usedCols.length; ++i){
+        tempCols2.push(tempTable[usedCols[i]]);
+      };
+      var query = ins.select.apply(ins, tempCols2).from(tempTable).toQuery();
+      console.log(query);
+      *con.query(query);
+    };
+    
+    /*post.insert(post.content, post.userId)
+      .select('\'test\'', user.id).from(user).where(user.name.like('A%')),
+      */
+  };
+  
+  if (droptemp){
+    console.log("droping temp");
+    *con.query(tempTable.drop());
+  };
+  
+  console.log("indexcomparison");
+  
+  var indexNoCreate = [];
+  if (existing && !dif){
+    var exindexes = existing.indexes || [];
+    var j
+    for (j = 0; j < exindexes.length; ++j){
+      var useIt = false;
+      for (i = 0; i < indexes.length; ++i){
+        if (indexfits(exindexes[j], indexes[i])){
+          indexNoCreate.push(indexes[i]);
+          useIt = true;
+          break;
+        };
+      };
+      if (!useIt && !exindexes[j].primaryKey){
+        // drop old index
+        console.log("dropping index " + exindexes[j].name);
+        console.log(table.indexes().drop(exindexes[j].name).toQuery());
+        *con.query(table.indexes().drop(exindexes[j].name));
+      };
+    };
+  };
+  
+  console.log("index 2");
+  
+  for (i = 0; i < indexes.length; ++i){
+    var createIt = true;
+    var idx = indexes[i];
+    //console.log(idx);
+    for (j = 0; j < indexNoCreate.length; ++j){
+      if (idx === indexNoCreate[j]){
+        createIt = false;
+      };
+    };
+    if (idx.primaryKey){
+      createIt = false;
+    };
+    if (createIt){
+      //post.indexes().create('index_name').unique().using('btree').on(post.id, post.userId)
+      var q = table.indexes().create(idx.name);
+      if (idx.unique){
+        q = q.unique();
+      };
+      var indexCols = [];
+      var c = 0;
+      for (c = 0; c < idx.columns.length; ++c){
+        indexCols.push(table[idx.columns[c]]);
+      };
+      q = q.on.apply(q, indexCols);
+      console.log("creating index");
+      *con.query(q);
+    };
+  };
+  
+};
+
+
+
+
+var canConvert = (parExisting, parNew){
+  
+};
+
+var typeSynonyms = [
+  ["int", "integer"], 
+  ["character varying", "varchar"]
+];
+
+var sameType = (type1, type2){
+  var parse1 = parser.parse(type1);
+  var parse2 = parser.parse(type2);
+  
+  var sameName;
+  if (parse1.name == parse2.name){
+    sameName = true;
+  };
+  var t = 0;
+  for (t = 0; t < typeSynonyms.length; ++t){
+    var syns = typeSynonyms[t];
+    var i = 0;
+    var found1 = false;
+    var found2 = false;
+    for (i = 0; i < syns.length; ++i){
+      if (parse1.name == syns[i]){
+        found1 = true;
+      };
+      if (parse2.name == syns[i]){
+        found2 = true;
+      };
+    };
+    if (found1 && found2){
+      sameName = true;
+    };
+  };
+  if (!sameName){
+    return false;
+  };
+  if (parse1.length == parse2.length){
+    return true;
+  };
+  return false;
+};
+
+
+var indexfits = (ex, ni){
+  //console.log("----------------");
+  //console.log(ex);
+  //console.log(ni);
+  if (!!ni.unique != !!ex.unique){
+    //console.log("unique dif");
+    return false;
+  };
+  if (!!ni.primaryKey != !!ex.primaryKey){
+    //console.log("primary dif");
+    return false;
+  };
+  
+  if (ni.name){
+    if (ni.name != ex.name){
+      //console.log("name dif");
+      return false;
+    };
+  };
+  
+  if (ni.columns.length != ex.columns.length){
+    //console.log("col len dif");
+    return false;
+  };
+  var i = 0;
+  for (i = 0; i < ni.columns.length; ++i){
+    if (ni.columns[i] != ex.columns[i]){
+      //console.log(i + ": " + ni.columns[i] + " " + ex.columns[i]);
+      return false;
+    };
+  };
+  
+  return true;
+  
+};
+
+
+return tableCreator;
+

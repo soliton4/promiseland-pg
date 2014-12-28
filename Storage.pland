@@ -1,0 +1,11 @@
+var Storage = class {
+  constructor: (par){
+    this.con = par.connection;
+    this.options = par;
+  }
+    
+  
+};
+
+
+return Storage;

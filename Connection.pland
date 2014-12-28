@@ -1,0 +1,77 @@
+
+var pg = require "pg";
+
+var tableScan = require "./tableScan";
+var sql = require "./sql";
+
+var Storage = require "./Storage";
+
+return class {
+  constructor: (parConStr, parOptions){
+    this.options = parOptions || {};
+    this.conStr = parConStr;
+  },
+    
+    // pass sql string and data array
+    // alternatively you can pass the result of a node-sql toQuery()
+    // or the object containint a toQuery menthod
+    
+    // returns a promise that resolves to the query result
+  query: (parSqlStr, parData){
+    
+    if (typeof(parSqlStr) == "object"){
+      if (!parSqlStr.text){
+        if (parSqlStr.toQuery){
+          parSqlStr = parSqlStr.toQuery();
+        };
+      };
+      parData = parSqlStr.values;
+      parSqlStr = parSqlStr.text;
+    };
+
+    var cb = new Callback();
+
+    pg.connect(this.conStr, cb);
+    
+    var conRes = *cb.promise;
+
+    if (conRes[0]){
+      throw conRes[0];
+    };
+
+    var client = conRes[1];
+    var done = conRes[2];
+    
+    cb = new promiseland.CallbackErrorFirst();
+    
+    
+    client.query(parSqlStr, parData, cb);
+    
+    done();
+    
+    return *cb.promise;
+    
+  },
+    
+  // promising
+  // -> tableScan.pland
+  tableDescription: (par){
+    par.connection = par.connection || this;
+    return tableScan(par);
+  },
+    
+  sql: sql,
+    
+  // promising
+  // -> tableCreator.pland
+  createTable: (par){
+    par.connection = par.connection || this;
+    return tableCreator(par);
+  },
+    
+  storageHandler: (par){
+    var par = par || {};
+    par.connection = par.connection || this;
+    return new Storage(par);
+  }
+};
