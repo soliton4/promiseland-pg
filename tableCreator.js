@@ -1,55 +1,4 @@
-(function(){
-  var defineFun;
-  var requireFun;
-  
-  if (typeof exports == "object" && typeof module == "object"){ // CommonJS
-    requireFun = function(modulesAr, callback, errBack){
-      try{
-        var i = 0;
-        var l = modulesAr.length;
-        var args = [];
-        for (i; i < l; ++i){
-          args.push(require(modulesAr[i]));
-        };
-      }catch(e){
-        errBack(e);
-        return;
-      };
-      callback.apply(callback, args);
-    };
-    defineFun = function(requireAr, callback){
-      requireFun(requireAr, function(){
-        module.exports = callback.apply(callback, arguments);
-      });
-    };
-    
-  }else if (typeof define == "function" && define.amd){ // AMD
-    var _define = define;
-    requireFun = require;
-    
-    defineFun = function(par1, par2){
-      if (par1 instanceof Array){
-        par1.unshift("require");
-      }else{
-        par2 = par1;
-        par1 = ["require"];
-      };
-      _define(par1, function(){
-        requireFun = arguments[0];
-        var args = [];
-        for (var i = 1; i < arguments.length; ++i){
-          args.push(arguments[i]);
-        };
-        return par2.apply(par2, args);
-      });
-    };
-    
-  }else{ // Plain browser env
-    alert("not working out!");
-    
-  };
-  defineFun(["promiseland"], function(promiseland){
-var __require = requireFun;
+(function(){var __modFun = function(__require, promiseland){ __modFun = undefined;
 
 var __Promise = promiseland.Promise;
 var Promise = promiseland.Promise;
@@ -64,66 +13,86 @@ var __requireFun = function(parModule){
         }, function(err){ returnPromise.reject(err); });
       }catch(e){ returnPromise.reject(e); };
       return returnPromise.promise;};
-    if (promiseland._hasModule({ hashStr: "71232c80f238112964e04781264cb6ad" })){ return promiseland._getModule("71232c80f238112964e04781264cb6ad"); };
+    if (promiseland._hasModule({ hashStr: "bb9bad664a6fb52f6189fd6e938559bc" })){ return promiseland._getModule("bb9bad664a6fb52f6189fd6e938559bc"); };
 var PL$1 = new __Promise();
-promiseland._registerModule({ hashStr: "71232c80f238112964e04781264cb6ad", "module": PL$1, promising: true });
+promiseland._registerModule({ hashStr: "bb9bad664a6fb52f6189fd6e938559bc", "module": PL$1, promising: true });
 var PL$25/*console*/;try{PL$25/*console*/ = console;}catch(e){};
 var PL$2 = (function(){
 "use strict";
-var PL$3 = function(code){ return function(res){ try{code(res);}catch(e){ PL$1.reject(e); }; }; };
-var PL$4 = function(e){ PL$1.reject(e); };
+var PL$3/*promiseland exception catcher*/ = function(code){
+  return function(res){
+    try{ code(res); }catch(e){
+      PL$1.reject(e);
+    };
+  };
+};
+var PL$4/*catch rejected*/ = function(e){
+  PL$1.reject(e);
+};
 var PL$5/*sql*/;
 var PL$7/*parser*/;
 var PL$9/*tableCreator*/;
-var PL$79/*canConvert*/;
-var PL$82/*typeSynonyms*/;
+var PL$84/*canConvert*/;
+var PL$87/*typeSynonyms*/;
 var PL$29/*sameType*/;
-var PL$61/*indexfits*/;
-PL$3(function(){
+var PL$66/*indexfits*/;
+PL$3/*promiseland exception catcher*/(function(){
 
   ;
-  __requireFun("./sql").then(PL$3(function(PL$6){PL$5/*sql*/ = PL$6;
-  __requireFun("./typeParser").then(PL$3(function(PL$8){PL$7/*parser*/ = PL$8;
+  __requireFun("./sql").then(PL$3/*promiseland exception catcher*/(function(PL$6){PL$5/*sql*/ = PL$6;
+  __requireFun("./typeParser").then(PL$3/*promiseland exception catcher*/(function(PL$8){PL$7/*parser*/ = PL$8;
   PL$9/*tableCreator*/ = (function(PL$10/*par*/){
   var PL$11 = new __Promise();
-var PL$13 = function(code){ return function(res){ try{code(res);}catch(e){ PL$11.reject(e); }; }; };
-var PL$14 = function(e){ PL$11.reject(e); };
-var PL$15/*con*/;
-var PL$16/*table*/;
-var PL$17/*indexes*/;
-var PL$18/*existing*/;
-var PL$20/*createTable*/;
-var PL$21/*dif*/;
-var PL$22/*droptemp*/;
-var PL$23/*renameName*/;
-var PL$26/*excols*/;
-var PL$27/*cols*/;
-var PL$28/*i*/;
-var PL$35/*create*/;
-var PL$39/*tempCols*/;
-var PL$40/*tempTable*/;
-var PL$41/*usedCols*/;
-var PL$42/*j*/;
-var PL$44/*tempCols1*/;
-var PL$45/*ins*/;
-var PL$46/*tempCols2*/;
-var PL$47/*query*/;
-var PL$54/*indexNoCreate*/;
-var PL$56/*exindexes*/;
-var PL$60/*useIt*/;
-var PL$70/*createIt*/;
-var PL$71/*idx*/;
-var PL$73/*q*/;
-var PL$74/*indexCols*/;
-var PL$75/*c*/;
-PL$13(function(){
+  var PL$13/*promiseland exception catcher*/ = function(code){
+    return function(res){
+      try{ code(res); }catch(e){
+        PL$11.reject(e);
+      };
+    };
+  };
+  var PL$14/*catch rejected*/ = function(e){
+    PL$11.reject(e);
+  };
+  var PL$15/*con*/;
+  var PL$16/*table*/;
+  var PL$17/*indexes*/;
+  var PL$18/*existing*/;
+  var PL$20/*createTable*/;
+  var PL$21/*dif*/;
+  var PL$22/*droptemp*/;
+  var PL$23/*renameName*/;
+  var PL$26/*excols*/;
+  var PL$27/*cols*/;
+  var PL$28/*i*/;
+  var PL$39/*create*/;
+  var PL$44/*tempCols*/;
+  var PL$45/*tempTable*/;
+  var PL$46/*usedCols*/;
+  var PL$47/*j*/;
+  var PL$49/*tempCols1*/;
+  var PL$50/*ins*/;
+  var PL$51/*tempCols2*/;
+  var PL$52/*query*/;
+  var PL$59/*indexNoCreate*/;
+  var PL$61/*exindexes*/;
+  var PL$65/*useIt*/;
+  var PL$75/*createIt*/;
+  var PL$76/*idx*/;
+  var PL$78/*q*/;
+  var PL$79/*indexCols*/;
+  var PL$80/*c*/;
+  PL$13/*promiseland exception catcher*/(function(){
   
     ;
     PL$15/*con*/ = PL$10/*par*/["connection"];
     PL$16/*table*/ = PL$10/*par*/["table"];
-    PL$17/*indexes*/ = (PL$10/*par*/["indexes"] || []);
-    PL$15/*con*/["tableDescription"]({"name": PL$16/*table*/["getName"](),
-"schema": PL$16/*table*/["getSchema"]()}).then(PL$13(function(PL$19){PL$18/*existing*/ = PL$19;
+    PL$17/*indexes*/ = (PL$10/*par*/["indexes"] || [
+      
+    ]);
+    PL$15/*con*/["tableDescription"]({
+      "name": PL$16/*table*/["getName"](),
+      "schema": PL$16/*table*/["getSchema"]()
+    }).then(PL$13/*promiseland exception catcher*/(function(PL$19){PL$18/*existing*/ = PL$19;
     PL$20/*createTable*/ = true;
     PL$21/*dif*/ = false;
     PL$22/*droptemp*/ = false;
@@ -165,270 +134,310 @@ PL$13(function(){
       var PL$30 = new __Promise();if(PL$21/*dif*/){
         PL$25/*console*/["log"]("some dif");
         PL$23/*renameName*/ = (PL$16/*table*/["getName"]() + "_temp_rename");
-        PL$15/*con*/["query"](PL$18/*existing*/["table"]["alter"]()["rename"](PL$23/*renameName*/)).then(PL$13(function(PL$31){PL$31;
+        PL$15/*con*/["query"](PL$18/*existing*/["table"]["alter"]()["rename"](PL$23/*renameName*/)).then(PL$13/*promiseland exception catcher*/(function(PL$31){PL$31;
         PL$22/*droptemp*/ = true;
-        PL$30.resolve();;}), PL$14);
-;
+        PL$30.resolve();;}), PL$14/*catch rejected*/);
+        ;
       }else{
       PL$20/*createTable*/ = false;
       PL$30.resolve();;
-      };PL$30.then(PL$13(function(PL$32){PL$32;;
+      };PL$30.then(PL$13/*promiseland exception catcher*/(function(PL$32){PL$32;;
       ;
-      PL$24.resolve();;}), PL$14);
-;
+      PL$24.resolve();;}), PL$14/*catch rejected*/);
+      ;
     }else{PL$24.resolve();
-    };PL$24.then(PL$13(function(PL$33){PL$33;;
+    };PL$24.then(PL$13/*promiseland exception catcher*/(function(PL$33){PL$33;;
     ;
     
     var PL$34 = new __Promise();if(PL$20/*createTable*/){
-      PL$25/*console*/["log"]("creating table");
-      PL$35/*create*/ = PL$16/*table*/["create"]();
-      PL$15/*con*/["query"](PL$35/*create*/).then(PL$13(function(PL$36){PL$36;
-      PL$34.resolve();;}), PL$14);
-;
+      var PL$35 = new __Promise();
+      var PL$36 = new __Promise();
+      var PL$37/*try catch*/ = function(code){ return function(res){ try{code(res);}catch(e){ PL$36.resolve(e); }; }; };
+      var PL$38 = function(e){ PL$36.resolve(e); };
+      PL$37/*try catch*/(function(){
+        PL$25/*console*/["log"]("creating table");
+        PL$39/*create*/ = PL$16/*table*/["create"]();
+        PL$15/*con*/["query"](PL$39/*create*/).then(PL$37/*try catch*/(function(PL$40){PL$40;
+        PL$35.resolve();}), PL$38);
+      ;})();
+      PL$36.then(PL$13/*promiseland exception catcher*/(function(PL$41/*e*/){
+        PL$25/*console*/["log"](PL$41/*e*/);
+        throw PL$41/*e*/;
+        PL$35.resolve();;}));
+      PL$35.then(PL$13/*promiseland exception catcher*/(function(){;
+      PL$34.resolve();;}), PL$14/*catch rejected*/)
     }else{PL$34.resolve();
-    };PL$34.then(PL$13(function(PL$37){PL$37;;
+    };PL$34.then(PL$13/*promiseland exception catcher*/(function(PL$42){PL$42;;
     ;
     
-    var PL$38 = new __Promise();if((PL$18/*existing*/ && PL$21/*dif*/)){
+    var PL$43 = new __Promise();if((PL$18/*existing*/ && PL$21/*dif*/)){
       PL$28/*i*/;
-      PL$39/*tempCols*/ = [];
+      PL$44/*tempCols*/ = [
+        
+      ];
       for(PL$28/*i*/ = 0;(PL$28/*i*/ < PL$26/*excols*/["length"]);++PL$28/*i*/){{
-        PL$39/*tempCols*/["push"](PL$26/*excols*/[PL$28/*i*/]["name"]);}};
+        PL$44/*tempCols*/["push"](PL$26/*excols*/[PL$28/*i*/]["name"]);}};
       ;
       PL$5/*sql*/["setDialect"]("postgres");
-      PL$40/*tempTable*/ = PL$5/*sql*/["define"]({"name": PL$23/*renameName*/,
-"schema": PL$16/*table*/["getSchema"](),
-"columns": PL$39/*tempCols*/});
-      PL$41/*usedCols*/ = [];
+      PL$45/*tempTable*/ = PL$5/*sql*/["define"]({
+        "name": PL$23/*renameName*/,
+        "schema": PL$16/*table*/["getSchema"](),
+        "columns": PL$44/*tempCols*/
+      });
+      PL$46/*usedCols*/ = [
+        
+      ];
       for(PL$28/*i*/ = 0;(PL$28/*i*/ < PL$26/*excols*/["length"]);++PL$28/*i*/){{
-        PL$42/*j*/ = 0;
-        for(PL$42/*j*/ = 0;(PL$42/*j*/ < PL$27/*cols*/["length"]);++PL$42/*j*/){{
-          if((PL$27/*cols*/[PL$42/*j*/]["name"] == PL$26/*excols*/[PL$28/*i*/]["name"])){
-            PL$41/*usedCols*/["push"](PL$27/*cols*/[PL$42/*j*/]["name"]);
+        PL$47/*j*/ = 0;
+        for(PL$47/*j*/ = 0;(PL$47/*j*/ < PL$27/*cols*/["length"]);++PL$47/*j*/){{
+          if((PL$27/*cols*/[PL$47/*j*/]["name"] == PL$26/*excols*/[PL$28/*i*/]["name"])){
+            PL$46/*usedCols*/["push"](PL$27/*cols*/[PL$47/*j*/]["name"]);
             break;;
           };
           ;}};
         ;}};
       ;
       
-      var PL$43 = new __Promise();if(PL$41/*usedCols*/["length"]){
-        PL$25/*console*/["log"](PL$41/*usedCols*/);
-        PL$44/*tempCols1*/ = [];
-        for(PL$28/*i*/ = 0;(PL$28/*i*/ < PL$41/*usedCols*/["length"]);++PL$28/*i*/){{
-          PL$44/*tempCols1*/["push"](PL$16/*table*/[PL$41/*usedCols*/[PL$28/*i*/]]);}};
+      var PL$48 = new __Promise();if(PL$46/*usedCols*/["length"]){
+        PL$25/*console*/["log"](PL$46/*usedCols*/);
+        PL$49/*tempCols1*/ = [
+          
+        ];
+        for(PL$28/*i*/ = 0;(PL$28/*i*/ < PL$46/*usedCols*/["length"]);++PL$28/*i*/){{
+          PL$49/*tempCols1*/["push"](PL$16/*table*/[PL$46/*usedCols*/[PL$28/*i*/]]);}};
         ;
-        PL$45/*ins*/ = PL$16/*table*/["insert"]["apply"](PL$16/*table*/, PL$44/*tempCols1*/);
+        PL$50/*ins*/ = PL$16/*table*/["insert"]["apply"](PL$16/*table*/, PL$49/*tempCols1*/);
         PL$25/*console*/["log"]("1");
-        PL$46/*tempCols2*/ = [];
-        for(PL$28/*i*/ = 0;(PL$28/*i*/ < PL$41/*usedCols*/["length"]);++PL$28/*i*/){{
-          PL$46/*tempCols2*/["push"](PL$40/*tempTable*/[PL$41/*usedCols*/[PL$28/*i*/]]);}};
+        PL$51/*tempCols2*/ = [
+          
+        ];
+        for(PL$28/*i*/ = 0;(PL$28/*i*/ < PL$46/*usedCols*/["length"]);++PL$28/*i*/){{
+          PL$51/*tempCols2*/["push"](PL$45/*tempTable*/[PL$46/*usedCols*/[PL$28/*i*/]]);}};
         ;
-        PL$47/*query*/ = PL$45/*ins*/["select"]["apply"](PL$45/*ins*/, PL$46/*tempCols2*/)["from"](PL$40/*tempTable*/)["toQuery"]();
-        PL$25/*console*/["log"](PL$47/*query*/);
-        PL$15/*con*/["query"](PL$47/*query*/).then(PL$13(function(PL$48){PL$48;
-        PL$43.resolve();;}), PL$14);
-;
-      }else{PL$43.resolve();
-      };PL$43.then(PL$13(function(PL$49){PL$49;;
+        PL$52/*query*/ = PL$50/*ins*/["select"]["apply"](PL$50/*ins*/, PL$51/*tempCols2*/)["from"](PL$45/*tempTable*/)["toQuery"]();
+        PL$25/*console*/["log"](PL$52/*query*/);
+        PL$15/*con*/["query"](PL$52/*query*/).then(PL$13/*promiseland exception catcher*/(function(PL$53){PL$53;
+        PL$48.resolve();;}), PL$14/*catch rejected*/);
+        ;
+      }else{PL$48.resolve();
+      };PL$48.then(PL$13/*promiseland exception catcher*/(function(PL$54){PL$54;;
       ;
-      PL$38.resolve();;}), PL$14);
-;
-    }else{PL$38.resolve();
-    };PL$38.then(PL$13(function(PL$50){PL$50;;
+      PL$43.resolve();;}), PL$14/*catch rejected*/);
+      ;
+    }else{PL$43.resolve();
+    };PL$43.then(PL$13/*promiseland exception catcher*/(function(PL$55){PL$55;;
     ;
     
-    var PL$51 = new __Promise();if(PL$22/*droptemp*/){
+    var PL$56 = new __Promise();if(PL$22/*droptemp*/){
       PL$25/*console*/["log"]("droping temp");
-      PL$15/*con*/["query"](PL$40/*tempTable*/["drop"]()).then(PL$13(function(PL$52){PL$52;
-      PL$51.resolve();;}), PL$14);
-;
-    }else{PL$51.resolve();
-    };PL$51.then(PL$13(function(PL$53){PL$53;;
+      PL$15/*con*/["query"](PL$45/*tempTable*/["drop"]()).then(PL$13/*promiseland exception catcher*/(function(PL$57){PL$57;
+      PL$56.resolve();;}), PL$14/*catch rejected*/);
+      ;
+    }else{PL$56.resolve();
+    };PL$56.then(PL$13/*promiseland exception catcher*/(function(PL$58){PL$58;;
     ;
     PL$25/*console*/["log"]("indexcomparison");
-    PL$54/*indexNoCreate*/ = [];
+    PL$59/*indexNoCreate*/ = [
+      
+    ];
     
-    var PL$55 = new __Promise();if((PL$18/*existing*/ && ! PL$21/*dif*/)){
-      PL$56/*exindexes*/ = (PL$18/*existing*/["indexes"] || []);
-      PL$42/*j*/;
-      PL$42/*j*/ = 0;var PL$58 = new __Promise();
-var PL$57 = function(){var PL$59 = new __Promise();
-if((PL$42/*j*/ < PL$56/*exindexes*/["length"])){
-      PL$60/*useIt*/ = false;
+    var PL$60 = new __Promise();if((PL$18/*existing*/ && ! PL$21/*dif*/)){
+      PL$61/*exindexes*/ = (PL$18/*existing*/["indexes"] || [
+        
+      ]);
+      PL$47/*j*/;
+      PL$47/*j*/ = 0;var PL$63 = new __Promise();
+      var PL$62 = function(){var PL$64 = new __Promise();
+      if((PL$47/*j*/ < PL$61/*exindexes*/["length"])){
+      PL$65/*useIt*/ = false;
       for(PL$28/*i*/ = 0;(PL$28/*i*/ < PL$17/*indexes*/["length"]);++PL$28/*i*/){{
-        if(PL$61/*indexfits*/(PL$56/*exindexes*/[PL$42/*j*/], PL$17/*indexes*/[PL$28/*i*/])){
-          PL$54/*indexNoCreate*/["push"](PL$17/*indexes*/[PL$28/*i*/]);
-          PL$60/*useIt*/ = true;
+        if(PL$66/*indexfits*/(PL$61/*exindexes*/[PL$47/*j*/], PL$17/*indexes*/[PL$28/*i*/])){
+          PL$59/*indexNoCreate*/["push"](PL$17/*indexes*/[PL$28/*i*/]);
+          PL$65/*useIt*/ = true;
           break;;
         };
         ;}};
       ;
       
-      var PL$62 = new __Promise();if((! PL$60/*useIt*/ && ! PL$56/*exindexes*/[PL$42/*j*/]["primaryKey"])){
-        PL$25/*console*/["log"](("dropping index " + PL$56/*exindexes*/[PL$42/*j*/]["name"]));
-        PL$25/*console*/["log"](PL$16/*table*/["indexes"]()["drop"](PL$56/*exindexes*/[PL$42/*j*/]["name"])["toQuery"]());
-        PL$15/*con*/["query"](PL$16/*table*/["indexes"]()["drop"](PL$56/*exindexes*/[PL$42/*j*/]["name"])).then(PL$13(function(PL$63){PL$63;
-        PL$62.resolve();;}), PL$14);
-;
-      }else{PL$62.resolve();
-      };PL$62.then(PL$13(function(PL$64){PL$64;;
+      var PL$67 = new __Promise();if((! PL$65/*useIt*/ && ! PL$61/*exindexes*/[PL$47/*j*/]["primaryKey"])){
+        PL$25/*console*/["log"](("dropping index " + PL$61/*exindexes*/[PL$47/*j*/]["name"]));
+        PL$25/*console*/["log"](PL$16/*table*/["indexes"]()["drop"](PL$61/*exindexes*/[PL$47/*j*/]["name"])["toQuery"]());
+        PL$15/*con*/["query"](PL$16/*table*/["indexes"]()["drop"](PL$61/*exindexes*/[PL$47/*j*/]["name"])).then(PL$13/*promiseland exception catcher*/(function(PL$68){PL$68;
+        PL$67.resolve();;}), PL$14/*catch rejected*/);
+        ;
+      }else{PL$67.resolve();
+      };PL$67.then(PL$13/*promiseland exception catcher*/(function(PL$69){PL$69;;
       ;
-      PL$59.resolve(true); return PL$59;
-;}), PL$14);
-;}else{PL$59.resolve(false); return PL$59;
-};
-PL$59;return PL$59;
-};
-var PL$65 = function(){PL$57().then(function(contLoop){
-if (contLoop){++PL$42/*j*/;PL$65();}else{PL$58.resolve();};
-});
-};
-PL$65();
-PL$58.then(function(){;
+      PL$64.resolve(true); return PL$64; /* continue */
+      ;}), PL$14/*catch rejected*/);
+      ;}else{
+      PL$64.resolve(false); return PL$64; /* break */
+      
+      };
+      PL$64;return PL$64;
+      };
+      var PL$70 = function(){PL$62().then(function(contLoop){
+      if (contLoop){++PL$47/*j*/;PL$70();}else{PL$63.resolve();};
+      });
+      };
+      PL$70();
+      PL$63.then(function(){;
       ;
-      PL$55.resolve();;});
-    }else{PL$55.resolve();
-    };PL$55.then(PL$13(function(PL$66){PL$66;;
+      PL$60.resolve();;});
+    }else{PL$60.resolve();
+    };PL$60.then(PL$13/*promiseland exception catcher*/(function(PL$71){PL$71;;
     ;
     PL$25/*console*/["log"]("index 2");
-    PL$28/*i*/ = 0;var PL$68 = new __Promise();
-var PL$67 = function(){var PL$69 = new __Promise();
-if((PL$28/*i*/ < PL$17/*indexes*/["length"])){
-    PL$70/*createIt*/ = true;
-    PL$71/*idx*/ = PL$17/*indexes*/[PL$28/*i*/];
-    for(PL$42/*j*/ = 0;(PL$42/*j*/ < PL$54/*indexNoCreate*/["length"]);++PL$42/*j*/){{
-      if((PL$71/*idx*/ === PL$54/*indexNoCreate*/[PL$42/*j*/])){
-        PL$70/*createIt*/ = false;
+    PL$28/*i*/ = 0;var PL$73 = new __Promise();
+    var PL$72 = function(){var PL$74 = new __Promise();
+    if((PL$28/*i*/ < PL$17/*indexes*/["length"])){
+    PL$75/*createIt*/ = true;
+    PL$76/*idx*/ = PL$17/*indexes*/[PL$28/*i*/];
+    for(PL$47/*j*/ = 0;(PL$47/*j*/ < PL$59/*indexNoCreate*/["length"]);++PL$47/*j*/){{
+      if((PL$76/*idx*/ === PL$59/*indexNoCreate*/[PL$47/*j*/])){
+        PL$75/*createIt*/ = false;
       };
       ;}};
     ;
-    if(PL$71/*idx*/["primaryKey"]){
-      PL$70/*createIt*/ = false;
+    if(PL$76/*idx*/["primaryKey"]){
+      PL$75/*createIt*/ = false;
     };
     ;
     
-    var PL$72 = new __Promise();if(PL$70/*createIt*/){
-      PL$73/*q*/ = PL$16/*table*/["indexes"]()["create"](PL$71/*idx*/["name"]);
-      if(PL$71/*idx*/["unique"]){
-        PL$73/*q*/ = PL$73/*q*/["unique"]();
+    var PL$77 = new __Promise();if(PL$75/*createIt*/){
+      PL$78/*q*/ = PL$16/*table*/["indexes"]()["create"](PL$76/*idx*/["name"]);
+      if(PL$76/*idx*/["unique"]){
+        PL$78/*q*/ = PL$78/*q*/["unique"]();
       };
       ;
-      PL$74/*indexCols*/ = [];
-      PL$75/*c*/ = 0;
-      for(PL$75/*c*/ = 0;(PL$75/*c*/ < PL$71/*idx*/["columns"]["length"]);++PL$75/*c*/){{
-        PL$74/*indexCols*/["push"](PL$16/*table*/[PL$71/*idx*/["columns"][PL$75/*c*/]]);}};
+      PL$79/*indexCols*/ = [
+        
+      ];
+      PL$80/*c*/ = 0;
+      for(PL$80/*c*/ = 0;(PL$80/*c*/ < PL$76/*idx*/["columns"]["length"]);++PL$80/*c*/){{
+        PL$79/*indexCols*/["push"](PL$16/*table*/[PL$76/*idx*/["columns"][PL$80/*c*/]]);}};
       ;
-      PL$73/*q*/ = PL$73/*q*/["on"]["apply"](PL$73/*q*/, PL$74/*indexCols*/);
+      PL$78/*q*/ = PL$78/*q*/["on"]["apply"](PL$78/*q*/, PL$79/*indexCols*/);
       PL$25/*console*/["log"]("creating index");
-      PL$15/*con*/["query"](PL$73/*q*/).then(PL$13(function(PL$76){PL$76;
-      PL$72.resolve();;}), PL$14);
-;
-    }else{PL$72.resolve();
-    };PL$72.then(PL$13(function(PL$77){PL$77;;
+      PL$15/*con*/["query"](PL$78/*q*/).then(PL$13/*promiseland exception catcher*/(function(PL$81){PL$81;
+      PL$77.resolve();;}), PL$14/*catch rejected*/);
+      ;
+    }else{PL$77.resolve();
+    };PL$77.then(PL$13/*promiseland exception catcher*/(function(PL$82){PL$82;;
     ;
-    PL$69.resolve(true); return PL$69;
-;}), PL$14);
-;}else{PL$69.resolve(false); return PL$69;
-};
-PL$69;return PL$69;
-};
-var PL$78 = function(){PL$67().then(function(contLoop){
-if (contLoop){++PL$28/*i*/;PL$78();}else{PL$68.resolve();};
-});
-};
-PL$78();
-PL$68.then(function(){;
+    PL$74.resolve(true); return PL$74; /* continue */
+    ;}), PL$14/*catch rejected*/);
+    ;}else{
+    PL$74.resolve(false); return PL$74; /* break */
+    
+    };
+    PL$74;return PL$74;
+    };
+    var PL$83 = function(){PL$72().then(function(contLoop){
+    if (contLoop){++PL$28/*i*/;PL$83();}else{PL$73.resolve();};
+    });
+    };
+    PL$83();
+    PL$73.then(function(){;
     ;
-    PL$11.resolve(); return;});}), PL$14);
-;}), PL$14);
-;}), PL$14);
-;}), PL$14);
-;}), PL$14);
-;}), PL$14);
-;})();
-return PL$11;
-});
-  PL$79/*canConvert*/ = (function(PL$80/*parExisting*/, PL$81/*parNew*/){
+    PL$11.resolve(); return;});}), PL$14/*catch rejected*/);
+    ;}), PL$14/*catch rejected*/);
+    ;}), PL$14/*catch rejected*/);
+    ;}), PL$14/*catch rejected*/);
+    ;}), PL$14/*catch rejected*/);
+    ;}), PL$14/*catch rejected*/);
+    ;
+  })();return PL$11;
+  });
+  PL$84/*canConvert*/ = (function(PL$85/*parExisting*/, PL$86/*parNew*/){
   
     ;
     ;});
-  PL$82/*typeSynonyms*/ = [["int", "integer"], ["character varying", "varchar"]];
-  PL$29/*sameType*/ = (function(PL$83/*type1*/, PL$84/*type2*/){
-  var PL$85/*parse1*/;
-var PL$86/*parse2*/;
-var PL$87/*sameName*/;
-var PL$88/*t*/;
-var PL$89/*syns*/;
-var PL$28/*i*/;
-var PL$90/*found1*/;
-var PL$91/*found2*/;
-
+  PL$87/*typeSynonyms*/ = [
+    [
+      "int", 
+      "integer"
+    ], 
+    [
+      "character varying", 
+      "varchar"
+    ]
+  ];
+  PL$29/*sameType*/ = (function(PL$88/*type1*/, PL$89/*type2*/){
+  
     ;
-    PL$85/*parse1*/ = PL$7/*parser*/["parse"](PL$83/*type1*/);
-    PL$86/*parse2*/ = PL$7/*parser*/["parse"](PL$84/*type2*/);
-    PL$87/*sameName*/;
-    if((PL$85/*parse1*/["name"] == PL$86/*parse2*/["name"])){
-      PL$87/*sameName*/ = true;
+    var PL$90/*parse1*/ = PL$7/*parser*/["parse"](PL$88/*type1*/);
+    ;
+    var PL$91/*parse2*/ = PL$7/*parser*/["parse"](PL$89/*type2*/);
+    ;
+    var PL$92/*sameName*/;
+    ;
+    if((PL$90/*parse1*/["name"] == PL$91/*parse2*/["name"])){
+      PL$92/*sameName*/ = true;
     };
     ;
-    PL$88/*t*/ = 0;
-    for(PL$88/*t*/ = 0;(PL$88/*t*/ < PL$82/*typeSynonyms*/["length"]);++PL$88/*t*/){{
-      PL$89/*syns*/ = PL$82/*typeSynonyms*/[PL$88/*t*/];
-      PL$28/*i*/ = 0;
-      PL$90/*found1*/ = false;
-      PL$91/*found2*/ = false;
-      for(PL$28/*i*/ = 0;(PL$28/*i*/ < PL$89/*syns*/["length"]);++PL$28/*i*/){{
-        if((PL$85/*parse1*/["name"] == PL$89/*syns*/[PL$28/*i*/])){
-          PL$90/*found1*/ = true;
+    var PL$93/*t*/ = 0;
+    ;
+    for(PL$93/*t*/ = 0;(PL$93/*t*/ < PL$87/*typeSynonyms*/["length"]);++PL$93/*t*/){{
+      var PL$94/*syns*/ = PL$87/*typeSynonyms*/[PL$93/*t*/];
+      ;
+      var PL$28/*i*/ = 0;
+      ;
+      var PL$95/*found1*/ = false;
+      ;
+      var PL$96/*found2*/ = false;
+      ;
+      for(PL$28/*i*/ = 0;(PL$28/*i*/ < PL$94/*syns*/["length"]);++PL$28/*i*/){{
+        if((PL$90/*parse1*/["name"] == PL$94/*syns*/[PL$28/*i*/])){
+          PL$95/*found1*/ = true;
         };
         ;
-        if((PL$86/*parse2*/["name"] == PL$89/*syns*/[PL$28/*i*/])){
-          PL$91/*found2*/ = true;
+        if((PL$91/*parse2*/["name"] == PL$94/*syns*/[PL$28/*i*/])){
+          PL$96/*found2*/ = true;
         };
         ;}};
       ;
-      if((PL$90/*found1*/ && PL$91/*found2*/)){
-        PL$87/*sameName*/ = true;
+      if((PL$95/*found1*/ && PL$96/*found2*/)){
+        PL$92/*sameName*/ = true;
       };
       ;}};
     ;
-    if(! PL$87/*sameName*/){
+    if(! PL$92/*sameName*/){
       return false;
     };
     ;
-    if((PL$85/*parse1*/["length"] == PL$86/*parse2*/["length"])){
+    if((PL$90/*parse1*/["length"] == PL$91/*parse2*/["length"])){
       return true;
     };
     ;
     return false;
     ;});
-  PL$61/*indexfits*/ = (function(PL$92/*ex*/, PL$93/*ni*/){
-  var PL$28/*i*/;
-
+  PL$66/*indexfits*/ = (function(PL$97/*ex*/, PL$98/*ni*/){
+  
     ;
-    if((! ! PL$93/*ni*/["unique"] != ! ! PL$92/*ex*/["unique"])){
+    if((! ! PL$98/*ni*/["unique"] != ! ! PL$97/*ex*/["unique"])){
       return false;
     };
     ;
-    if((! ! PL$93/*ni*/["primaryKey"] != ! ! PL$92/*ex*/["primaryKey"])){
+    if((! ! PL$98/*ni*/["primaryKey"] != ! ! PL$97/*ex*/["primaryKey"])){
       return false;
     };
     ;
-    if(PL$93/*ni*/["name"]){
-      if((PL$93/*ni*/["name"] != PL$92/*ex*/["name"])){
+    if(PL$98/*ni*/["name"]){
+      if((PL$98/*ni*/["name"] != PL$97/*ex*/["name"])){
         return false;
       };
       ;
     };
     ;
-    if((PL$93/*ni*/["columns"]["length"] != PL$92/*ex*/["columns"]["length"])){
+    if((PL$98/*ni*/["columns"]["length"] != PL$97/*ex*/["columns"]["length"])){
       return false;
     };
     ;
-    PL$28/*i*/ = 0;
-    for(PL$28/*i*/ = 0;(PL$28/*i*/ < PL$93/*ni*/["columns"]["length"]);++PL$28/*i*/){{
-      if((PL$93/*ni*/["columns"][PL$28/*i*/] != PL$92/*ex*/["columns"][PL$28/*i*/])){
+    var PL$28/*i*/ = 0;
+    ;
+    for(PL$28/*i*/ = 0;(PL$28/*i*/ < PL$98/*ni*/["columns"]["length"]);++PL$28/*i*/){{
+      if((PL$98/*ni*/["columns"][PL$28/*i*/] != PL$97/*ex*/["columns"][PL$28/*i*/])){
         return false;
       };
       ;}};
@@ -436,11 +445,36 @@ var PL$91/*found2*/;
     return true;
     ;});
   PL$1.resolve(PL$9/*tableCreator*/); return;
-  PL$1.resolve(); return;}), PL$4);
-;}), PL$4);
-;})();
-return PL$1;
+  PL$1.resolve(); return;}), PL$4/*catch rejected*/);
+  ;}), PL$4/*catch rejected*/);
+  ;
+})();return PL$1;
 })();
 ;;
-return PL$1});
+return PL$1};
+  
+  if (typeof exports == "object" && typeof module == "object"){ // CommonJS
+    module.exports = __modFun(function(modulesAr, callback, errBack){
+      // the require function for CommonJs
+      var args = [];
+      try{
+        var i = 0;
+        var l = modulesAr.length;
+        for (i; i < l; ++i){
+          args.push(require(modulesAr[i]));
+        };
+      }catch(e){
+        errBack(e);
+        return;
+      };
+      callback.apply(callback, args);
+    }, require("promiseland"));
+  
+  }else if (typeof define == "function" && define.amd){ // AMD
+    define(["require", "promiseland"], __modFun);
+  
+  }else{ // Plain browser env
+    __modFun(function(){ throw { msg: "require not possible in non loader mode" }; });
+  
+  };
 })();

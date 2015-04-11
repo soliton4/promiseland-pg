@@ -81,9 +81,14 @@ var tableCreator = (par){
   
   
   if (createTable){
+    try{
     console.log("creating table");
     var create = table.create();
     *con.query(create);
+    }catch(e){
+      console.log(e);
+      throw e;
+    }
   };
   
   if (existing && dif){
