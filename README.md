@@ -30,7 +30,7 @@ var indexes = myTableDescription.indexes; // array of indexes
 var pk = myTableDescription.pk;           // the primary keyk
 ```
 
-see (https://github.com/brianc/node-sql)[node-sql] for details on the table description objects.  
+see  [node-sql](https://github.com/brianc/node-sql) for details on the table description objects.  
 
 
 creating/modifying a table without desroying existing data:
@@ -69,7 +69,7 @@ if a existing table is found the existing data will be transformed to the new de
 promiseland storage:
 ====================
 
-Now to the most advanced feature. A promiseland savable storage module is provided. See (https://github.com/soliton4/promiseland/wiki/savable)[promiseland savable] for details.  
+Now to the most advanced feature. A promiseland savable storage module is provided. See [promiseland savable](https://github.com/soliton4/promiseland/wiki/savable) for details.  
 
 a complete promiseland module:
 ```
