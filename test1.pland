@@ -1,49 +1,55 @@
 try{
 
 var Con = require "./Connection";
-
-var con = new Con("postgres://postgres:<insertpasswort>@localhost/mydb");
-
-console.log(*con.query("select * from testtab1"));
-
-var sql = con.sql;
-
-var tab1 = sql.define({
-  name: 'tab1',
-  schema: "public",
-  columns: [{
-      name: 'id',
-      dataType: "integer",
-      primaryKey: true
-    }, {
-      name: 'someval1',
-      dataType: 'char(30)'
-    }
-  ]
-});
   
+  var pwd = require "./demo/password";
+
+
+  var con = new Con("postgres://postgres:" + pwd + "@localhost/mydb");
+
+  console.log(*con.query("select * from testtab1"));
+
+  var sql = con.sql;
+
+  console.log(sql.dialect);
+  return;
+
+  var tab1 = sql.define({
+    name: 'tab1',
+    schema: "public",
+    columns: [{
+        name: 'id',
+        dataType: "integer",
+        primaryKey: true
+      }, {
+        name: 'someval1',
+        dataType: 'char(30)'
+      }
+    ]
+  });
+
   console.log("x1");
 
-*con.createTable({
-  table: tab1
-});
+  *con.createTable({
+    table: tab1
+  });
 
-    console.log("x2");
+  console.log("x2");
 
-  
+
   var ttable = (*con.tableDescription({name: "testtab1"})).table;
-  
+
   console.log(ttable);
-  
+
   var query = ttable
     .select(ttable.some)
     .from(ttable)
     .where(
       ttable.key.equals(1)
     ).toQuery();
-  
 
-console.log(*con.query(query));
+
+  console.log(*con.query(query));
   
   
 }catch(e){

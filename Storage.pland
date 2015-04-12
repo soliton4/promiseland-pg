@@ -1,11 +1,127 @@
+
+var quote = function(word, quoteCharacter) {
+  var q;
+  if (quoteCharacter) {
+    // use the specified quote character if given
+    q = quoteCharacter;
+  } else {
+    q = "\"";
+  }
+
+  return q + word.replace(new RegExp(q,'g'),q+q) + q;
+};
+
 var Storage = class {
   constructor: (par){
     this.con = par.connection;
-    this.options = par;
-  }
+    this.options = par || {};
+  },
     
+  registerClass: (par)*{
+    
+    //console.log(par);
+    
+    var sql = this.con.sql;
+    var con = this.con;
+    
+    var tableNameStr = par.className;
+    var schemaNameStr = par.moduleName || "pland_" + par.moduleHash;
+    
+    var columns = [];
+    
+    columns.push({
+      name: "id",
+      dataType: "varchar",
+      primaryKey: true
+    });
+  
+    var propertiesAr = par.propertiesAr;
+    var i = 0;
+    for (i = 0; i < propertiesAr.length; ++i){
+      var prop = propertiesAr[i];
+      if (prop.name == "id"){
+        continue;
+      };
+      var col = {
+        name: prop.name,
+        dataType: "varchar"
+      };
+      if (prop.meta && prop.meta.type){
+        col.dataType = prop.meta.type;
+      };
+      columns.push(col);
+    };
+    
+    var table = sql.define({
+      name: tableNameStr,
+      schema: schemaNameStr,
+      columns: columns
+    });
+    
+    var tabCreated = false;
+    var getTable = (){
+      if (tabCreated){
+        return table;
+      };
+      *con.query("CREATE SCHEMA IF NOT EXISTS " + quote(schemaNameStr) + ";");
+      *con.createTable({
+        table: table
+      });
+      tabCreated = true;
+      return table;
+    };
+    
+    var selectStar = (parId){
+      var table = *getTable();
+      var res = *con.query(table.select(table.star()).from(table).where(table.id.equals(parId)).toQuery());
+      if (res && res.rows){
+        return res.rows[0];
+      };
+      return undefined;
+    };
+    
+    return {
+      save: (par)*{
+        var table = *getTable();
+        var starRes = *selectStar(par.properties.id.value);
+        var i = 0;
+        var o = {};
+        for (i = 0; i < par.propertiesAr.length; ++i){
+          o[par.propertiesAr[i].name] = par.propertiesAr[i].value;
+        };
+        if (starRes){
+          for (i = 0; i < par.propertiesAr.length; ++i){
+            if (par.propertiesAr[i].name == "id"){
+              continue;
+            };
+            o[par.propertiesAr[i].name] = par.propertiesAr[i].value;
+          };
+          *con.query(table.update(o).where(table.id.equals(par.properties.id.value))
+          );
+          
+        }else{
+          for (i = 0; i < par.propertiesAr.length; ++i){
+            o[par.propertiesAr[i].name] = par.propertiesAr[i].value;
+          };
+          *con.query(table.insert(o));
+          
+        };
+        
+      },
+      load: (par)*{
+        return *selectStar(par.properties.id.value);
+      },
+      delete: (par)*{
+        var table = *getTable();
+        *con.query(table.delete().where(table.id.equals(par.properties.id.value)));
+      }
+    };
+    
+  }
   
 };
+
+
 
 
 return Storage;

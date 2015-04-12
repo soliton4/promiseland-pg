@@ -1,0 +1,38 @@
+<{
+  name: "mymodule"
+}>
+  
+try{
+  
+  var pwd = require "./password";
+  
+  var Con = require "..";
+
+  var con = new Con("postgres://postgres:" + pwd + "@localhost/mydb");
+
+  promiseland.classSystem.setStorageEngine(con.storageHandler());
+
+  class type savable Test1 {
+    constructor: (var x){
+
+    },
+    var a: 1,
+    var meta { type: "int" } b: 2,
+    var c: "xxx",
+    var y: "new col data"
+  };
+  
+  Test1 a = *new Test1("yy");
+  
+  console.log(a.c);
+  
+  a.c = "something else";
+  a.b = 4;
+  
+  *a.save();
+  
+  console.log("the end");
+  
+}catch(e){
+  console.log(e);
+}
